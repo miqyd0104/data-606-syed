@@ -10,7 +10,7 @@ I am a Junior Data Consultant at **Sparta Global**, undertaking an eight-week tr
 
 **Current stage: Week 4 of 8** · [Browse the weeks](#weekly-learning-record) · [Project portfolio](#project-portfolio) · [Reusable templates](templates/README.md)
 
-> **Portfolio status:** The structure is ready. Weekly notes and practical evidence will be added as I document earlier training and continue the programme. Empty folders are placeholders, not completed work.
+> **Portfolio status:** [Week 1, Day 1](week-01/notes/day-01-professional-foundations.md) is documented, including the T-shaped professional discussion and a presentation brief. Further notes and practical evidence will be added as I document earlier training and continue the programme. Empty folders are placeholders, not completed work.
 
 ## Weekly learning record
 
@@ -18,7 +18,7 @@ Each week has its own overview and dedicated folders for notes, exercises and pr
 
 | Week | Training stage | Documentation | Explore |
 | :--- | :--- | :--- | :--- |
-| [Week 01](week-01/README.md) | Earlier training | To add | [Notes](week-01/notes/) · [Exercises](week-01/exercises/) · [Projects](week-01/projects/) |
+| [Week 01](week-01/README.md) | Earlier training | Day 1 added; remaining days to add | [Notes](week-01/notes/) · [Exercises](week-01/exercises/) · [Projects](week-01/projects/) |
 | [Week 02](week-02/README.md) | Earlier training | To add | [Notes](week-02/notes/) · [Exercises](week-02/exercises/) · [Projects](week-02/projects/) |
 | [Week 03](week-03/README.md) | Earlier training | To add | [Notes](week-03/notes/) · [Exercises](week-03/exercises/) · [Projects](week-03/projects/) |
 | **[Week 04](week-04/README.md)** | **Current week** | **To add** | [Notes](week-04/notes/) · [Exercises](week-04/exercises/) · [Projects](week-04/projects/) |
