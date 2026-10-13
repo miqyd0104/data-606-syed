@@ -2,4 +2,8 @@
 
 [← All weeks](../README.md)
 
-[Notes](notes/) · [Exercises](exercises/) · [Projects](projects/)
+## Notes
+
+- [Day 1 — SQL joins](notes/day-01-sql-joins.md)
+
+[Exercises](exercises/) · [Projects](projects/)
