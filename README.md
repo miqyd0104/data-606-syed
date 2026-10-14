@@ -1,4 +1,4 @@
-# Data 606 — Syed Hamdani
+# Data 606 - SPARTA GLOBAL
 
 My notes and practical work from the eight-week data training programme at Sparta Global, where I work as a Junior Data Consultant.
 
