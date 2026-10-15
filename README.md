@@ -14,3 +14,7 @@ My notes and practical work from the eight-week data training programme at Spart
 - [Week 8](week-08/README.md)
 
 Each week has folders for notes, exercises and projects.
+
+## AI Fundamentals
+
+[AI Fundamentals](ai-fundamentals/README.md) contains notes for the five classes alongside the training programme, the original slide decks as PDFs, and the course specification.
