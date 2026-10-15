@@ -1,3 +1,4 @@
+[apis-http-json-updated.md](https://github.com/user-attachments/files/33503993/apis-http-json-updated.md)
 # APIs, HTTP and JSON
 
 ## Working with Files
@@ -6,380 +7,357 @@
 
 “JSON stands for JavaScript Object Notation. It’s a lightweight text format used to exchange data between systems, especially through APIs.
 
-It organises information using objects with key-value pairs and arrays. For example, a weather service could return a city, temperature and forecast.
+It uses key-value pairs. For example, the key could be ‘city’ and the value ‘Leeds’, separated by a colon. Both are text, so they use double quotation marks, and the object sits inside curly brackets.
 
-It’s useful because people can read it, and most programming languages can process it.”
+It’s useful because most programming languages can read it, making data easier to share.”
 
 ### 2. What is CSV?
 
-“CSV stands for Comma-Separated Values. It stores tabular data as text, with records arranged in rows and commas usually separating the fields.
+“CSV stands for Comma-Separated Values. It stores tabular data as text, with each row representing a record and commas usually separating the fields.
 
-For example, our IMDb file contained information about titles, such as their names and release years.
+For example, our IMDb file contained information like the title, release year and genre.
 
-It’s widely supported, so it’s useful for moving data between tools like Excel, Python and databases.”
+It’s useful for moving data between tools because Excel, Python and databases can all work with it.”
 
 ### 3. What does the `with` statement do when working with files?
 
-“`with` manages the file for the duration of a block of code. When the block finishes, it closes the file automatically—even if an exception occurs.
+“When I use ‘with’ to open a file, Python closes it automatically when the block finishes, even if an error happens.
 
-For example, I can read a CSV inside `with open(...)` without needing a separate `close()` call.
+For example, I can read a CSV inside that block without needing a separate closing step.
 
-It handles the cleanup, but it doesn’t automatically handle errors such as a missing file.”
+It handles the cleanup, although I’d still need to handle problems like the file not existing.”
 
 ### 4. Why is using `with` considered best practice?
 
-“It makes cleanup reliable and keeps the code straightforward.
+“It means I don’t have to rely on remembering to close the file myself.
 
-If I manually open and close a file, an error between those steps could prevent the closing code from running. Using `with` handles that automatically.
+If I open it manually and an error happens before the closing instruction, that instruction might never run. Using ‘with’ avoids that problem.
 
-That helps avoid leaving resources open and makes it clear which part of the code uses the file.”
+It keeps the code simpler and makes sure the file is closed when I’m finished.”
 
-### 5. What happens if you open a file that does not exist?
+### 5. What happens if you open a file that doesn’t exist?
 
-“It depends on the mode. Opening a missing file in read mode raises `FileNotFoundError`.
+“It depends on the mode. In read mode, Python raises a file-not-found error because there’s nothing to read.
 
-Write and append modes can create the file, provided the parent folder exists and we have permission.
+Write and append modes can create the file, provided the folder exists and I have permission.
 
-For example, reading a missing customer CSV should fail, while opening a new output CSV in write mode can create it.”
+So reading a missing source file would fail, but writing a new output file could create it.”
 
-### 6. What are the common modes used with `open()`?
+### 6. What are the common file modes used with `open()`?
 
-“The main modes are:
+“The main ones are ‘r’ for reading, ‘w’ for writing, ‘a’ for appending and ‘x’ for creating a new file only if it doesn’t already exist.
 
-- `r` — reads an existing file.
-- `w` — writes a file, replacing existing contents.
-- `a` — appends to the end.
-- `x` — creates a file only if it doesn’t already exist.
+Adding ‘b’ selects binary mode, and a plus sign enables reading and writing.
 
-Adding `b` selects binary mode, and `+` enables reading and writing.
+For example, I’d use read mode for the original IMDb file. I’d be careful with write mode because it replaces existing contents.”
 
-For example, I’d read the source CSV with `r` and deliberately choose how to create the output.”
+### 7. What is the difference between write and append modes?
 
-### 7. What is the difference between `w` and `a`?
+“Write mode replaces the contents of an existing file. Append mode keeps what’s already there and adds new content to the end. Both can create a new file.
 
-“`w` replaces the contents of an existing file, while `a` preserves the contents and adds to the end. Both can create a new file.
+For example, I might use write mode for a fresh report and append mode for another log entry.
 
-For example, I might use `w` to produce a fresh daily report and `a` to add another entry to a log.
-
-The distinction matters because using `w` accidentally could erase information.”
+Choosing the wrong mode could erase information or create repeated data.”
 
 ### 8. What is the difference between `json.load()` and `json.loads()`?
 
-“Both parse JSON into Python objects. `json.load()` reads from a file-like object, while `json.loads()` reads from a string.
+“They both turn JSON into Python data, but they read it from different places.
 
-For example, I’d use `load()` with an opened JSON file and `loads()` if I already had the JSON text in a variable.
+‘Json load’ reads from an opened file. ‘Json loads’, with an ‘s’ at the end, reads JSON text from a string already in the program.
 
-The result can contain dictionaries, lists and other Python values.”
+So I’d use load for a JSON file and loads when the JSON text is already held in a variable.”
 
 ### 9. How would you write a Python dictionary to a JSON file?
 
-“I’d open the destination using `with`, then use `json.dump()` to serialise the dictionary.”
+“I’d import Python’s JSON module, open the output file using ‘with’, and use ‘json dump’ to write the dictionary as JSON.
 
-```python
-import json
+For example, my dictionary could contain a customer’s name and city. I could also add indentation so the output is easier for someone to read.
 
-customer = {"name": "Sumiyya", "city": "Bradford"}
+I’d check that the values can be represented in JSON and that I’m happy to replace the destination file if it already exists.”
 
-with open("customer.json", "w", encoding="utf-8") as file:
-    json.dump(customer, file, indent=2)
-```
+### 10. A CSV contains customer data, but some rows are missing values. How would you handle this?
 
-“`indent=2` makes the file easier to read. I’d also check that the values are JSON-compatible—for example, dates need converting into an agreed representation.”
+“I’d first check which values are missing and whether they’re required.
 
-### 10. Some CSV rows are missing values. How would you handle this?
+A missing phone number might be acceptable, but a missing customer ID could stop us linking the record correctly.
 
-“I’d first check which fields are missing and whether they’re required.
+I’d follow the agreed rules—perhaps leaving an optional field empty or setting the record aside for investigation. I wouldn’t automatically delete every incomplete row or fill it with a guess.”
 
-For example, a missing optional phone number might be acceptable, but a missing customer ID could prevent us from linking the record correctly.
+### 11. How would you merge data from a CSV and a JSON file?
 
-Depending on the agreed rules, I’d retain the missing value, use a justified default or set the record aside for investigation. I wouldn’t automatically delete every incomplete row.”
+“I’d read both files and find a shared field, like customer ID. If the JSON contains nested records, I may need to flatten the relevant information first.
 
-### 11. How would you merge CSV and JSON data?
+For example, the CSV could contain customer details and the JSON their orders.
 
-“I’d read both files, inspect their structures and identify a shared field, such as customer ID. If the JSON is nested, I may need to flatten the relevant records first.
-
-For example, the CSV could contain customers and the JSON their orders.
-
-I could merge them using pandas, checking that the IDs have compatible types and that duplicate matches don’t unexpectedly multiply the rows.”
+I could merge them using pandas, then check that the IDs have matching types and that missing or duplicate matches haven’t produced unexpected results.”
 
 ### 12. What would you consider when writing data back to a file?
 
-“I’d check the destination, format, encoding and whether I should replace or append to an existing file.
+“I’d check the location, required format and whether I should replace the file or add to it.
 
-For a CSV, I’d also check the headers, column order and quoting. Then I’d verify that the output contains the expected records.
+For a CSV, I’d check the headers, column order, encoding and how missing values should appear.
 
-For important outputs, I’d consider writing to a temporary file first, so a failure doesn’t leave the final file only partly written.”
+Then I’d check the output against what I expected. For an important file, I could write a temporary version first so a failure doesn’t leave the final output partly written.”
 
 ### 13. How would you prevent accidentally overwriting an important file?
 
-“I could use `x` mode, which fails if the file already exists, rather than silently replacing it.
+“I could use exclusive creation mode—the letter ‘x’—which raises an error if the file already exists.
 
-I’d also keep source and output paths separate and consider versioned filenames or backups.
+I’d also keep source and output paths separate and use dated filenames or backups where needed.
 
-For example, writing a transformed dataset to a new dated filename lets me preserve the original and compare the results.”
+For example, creating a new report version lets me keep the previous one rather than replacing it accidentally.”
 
-### 14. How would you process a file that causes memory issues?
+### 14. A file is extremely large and causes memory issues. How would you process it?
 
-“I’d avoid loading the whole file into memory. Instead, I’d process it incrementally, either record by record or in manageable chunks.
+“I’d avoid loading the whole file into memory. Instead, I’d process records one at a time or in smaller chunks.
 
-For example, I could iterate through a CSV reader and write qualifying records straight to the output.
+For example, with a CSV, I could read a record, apply the filtering rules and write it straight to the output if it qualifies.
 
-The approach depends on the format. JSON Lines supports record-by-record reading, while one large JSON document may need a streaming parser.”
+That keeps memory use down. A large JSON document may need a streaming parser, depending on its structure.”
 
 ## Error Handling
 
 ### 15. What is an exception in Python?
 
-“An exception is an event that interrupts normal execution when an operation fails or signals a problem.
+“An exception interrupts the normal flow of a program when an operation fails or signals a problem.
 
-For example, converting `"hello"` into an integer raises `ValueError`.
+For example, trying to convert the word ‘hello’ into an integer raises a value error.
 
-We can handle expected exceptions so the program responds appropriately, rather than stopping without a useful explanation.”
+We can handle expected exceptions so the program responds sensibly, such as explaining the problem or asking for another input.”
 
 ### 16. What is the difference between a syntax error and an exception?
 
-“A syntax error means Python can’t parse the code, such as when a colon is missing after an `if` statement.
+“A syntax error means the code isn’t written in a way Python can parse, like leaving a colon off an ‘if’ statement.
 
-Other exceptions happen while valid code is running, such as dividing by zero or opening a missing file.
+A runtime exception happens when the code runs into a problem, such as trying to open a missing file.
 
-Technically, `SyntaxError` is itself an exception type, but the practical distinction is invalid code structure versus a problem during execution.”
+So I’d fix the code structure for a syntax error, while an expected runtime problem might need handling with ‘try’ and ‘except’.”
 
 ### 17. What is the purpose of a `try` block?
 
-“A `try` block contains an operation that might raise an exception we want to handle.
+“A ‘try’ block contains an operation that might fail in a way we want to handle.
 
-For example, I could try converting a user’s input into a number.
+For example, I could try converting someone’s input into a number. If that raises an exception, Python looks for a matching ‘except’ block.
 
-If an exception occurs, execution leaves the remaining code in that block and Python looks for a matching handler. I’d keep the block focused so it’s clear which operation we’re protecting.”
+It doesn’t prevent the error—it gives us a way to respond to it.”
 
 ### 18. What is the purpose of an `except` block?
 
-“An `except` block defines how to respond to a matching exception raised in the `try` block.
+“An ‘except’ block says what to do when a particular exception happens in the ‘try’ block.
 
-For example, if converting input raises `ValueError`, I could explain that a number is required and ask again.
+For example, if someone enters text instead of a number, I could catch a value error, explain what’s needed and let them try again.
 
-It lets us handle an expected problem deliberately rather than allowing it to stop the program unexpectedly.”
+That makes the problem manageable rather than stopping the program without useful guidance.”
 
-### 19. What happens if an exception is not handled?
+### 19. What happens if an exception is raised but not handled?
 
-“The exception moves back through the function calls looking for a matching handler.
+“Python works back through the function calls looking for something that can handle it. If nothing does, execution stops and Python reports the error with a traceback.
 
-If nothing handles it, normal execution stops and Python reports the error with a traceback. In a larger application, a framework or task runner might catch it.
+For example, a missing-file error could stop a pipeline before processing begins.
 
-For a pipeline, that could mean the task fails, so we need useful logging to understand where and why.”
+The traceback helps locate the problem, and clear logging helps us understand the context.”
 
 ### 20. What is `FileNotFoundError`?
 
-“`FileNotFoundError` is raised when an operation needs a file or directory that can’t be found.
+“A file-not-found error happens when an operation needs a file or folder that can’t be found.
 
-For example, reading `customers.csv` fails if that path doesn’t exist.
+For example, trying to read a customer CSV fails if it isn’t at the supplied path.
 
-I’d check the supplied path and the program’s working directory, because a relative path might point somewhere different from what I expected.”
+I’d check the spelling, location and working directory, because the program might be looking somewhere different from where I expected.”
 
 ### 21. Why is exception handling important in production applications?
 
-“Production systems encounter problems such as unavailable services, missing files and invalid input. Exception handling lets us respond predictably and record enough detail to investigate.
+“Real applications encounter missing files, unavailable services and invalid data. We need to respond to those problems clearly and predictably.
 
-For example, a pipeline could report which source file failed instead of leaving an unexplained partial result.
+For example, a pipeline should report which file failed rather than appear successful with incomplete data.
 
-It doesn’t mean hiding every error or continuing regardless. Sometimes stopping clearly is the correct response.”
+Sometimes we can recover, but sometimes stopping and reporting the problem is safer than carrying on with incorrect results.”
 
-### 22. What does `finally` do?
+### 22. What does the `finally` block do?
 
-“`finally` runs as control leaves a `try` statement, whether the operation succeeded or an exception occurred. It’s mainly used for cleanup.
+“‘Finally’ runs when we leave the ‘try’ statement, whether the operation succeeded or an exception occurred. We normally use it for cleanup.
 
-For example, it could release a resource that was opened earlier.
+For example, it could close a connection or release another resource.
 
-An exception still propagates if it hasn’t been handled; `finally` doesn’t automatically fix or suppress it.”
+It doesn’t automatically handle the error—the exception can still continue after the cleanup.”
 
 ### 23. When would you use `raise`?
 
-“I’d use `raise` when the program detects a condition that prevents it from proceeding correctly.
+“I’d use ‘raise’ when I detect a problem that means the function can’t complete its task correctly.
 
-For example, if a customer file is missing a required ID column, I could raise a clear exception rather than produce an unusable output.
+For example, if an input file is missing a required customer ID column, I could raise a clear error rather than produce an incomplete result.
 
-I can also re-raise an exception after logging it so the caller knows the operation failed.”
+That lets the calling code decide what should happen next.”
 
 ### 24. What are the benefits of catching specific exceptions?
 
-“It lets me respond differently to different problems and avoids hiding unrelated bugs.
+“It helps us respond to the actual problem without hiding other mistakes.
 
-For example, a missing file needs a different response from a file containing invalid JSON.
+For example, a missing file needs different handling from a file containing invalid JSON.
 
-If I catch everything and return an empty result, a serious problem might look like a successful run with no data. Specific handling makes the behaviour clearer.”
+If I catch everything and return an empty result, a serious failure might look like a successful run with no records. Specific exceptions help keep that distinction clear.”
 
-### 25. How can exception handling improve user experience?
+### 25. How can exception handling improve the user experience?
 
-“It replaces confusing failures with clear information and, where possible, a way to recover.
+“It gives someone a useful explanation and, where possible, a way to recover.
 
-For example, if someone enters text instead of a number, I can explain what’s needed and let them try again.
+For example, instead of showing a technical traceback when they enter invalid text, I could explain that a number is required and let them try again.
 
-The user gets useful guidance, while technical details can be logged separately for investigation.”
+Technical details can still be logged separately so the problem can be investigated.”
 
 ### 26. A user enters text when a number is expected. What would you do?
 
-“I’d try converting the input and catch `ValueError` if it isn’t a valid number. Then I’d explain the problem and ask again.
+“I’d try converting the input and catch a value error if it isn’t a valid number. Then I’d explain what’s needed and ask again.
 
-After conversion, I’d also validate the range. For example, `-5` is a valid integer but might not be a valid order quantity.
+I’d also check the value after conversion. A negative number is still a number, but it might not be a valid order quantity.
 
-That separates the correct data type from the business rules.”
+That checks both the format and the business rule.”
 
-### 27. A user supplies a file path that does not exist. What would you do?
+### 27. A user supplies a file path that doesn’t exist. What would you do?
 
-“I’d attempt to open it and handle `FileNotFoundError` with a clear message identifying the path.
+“I’d try opening it and catch a file-not-found error.
 
-In an interactive program, I could ask for another path. In an automated pipeline, I’d log the issue and follow the agreed failure policy.
+In an interactive program, I could explain which path wasn’t found and ask for another one. In a scheduled pipeline, I’d log the issue and follow the agreed failure process.
 
 I wouldn’t silently create an empty input file, because that could hide the missing data.”
 
 ### 28. A JSON file contains invalid syntax. What would you do?
 
-“I’d catch `json.JSONDecodeError` and use its details to identify where parsing failed.
+“I’d catch the JSON decoding error and use its details to help find the problem.
 
-For example, the file might have a missing comma or incorrectly quoted text. I’d report the issue and preserve the original for investigation.
+For example, there could be a missing comma or a string written without the required double quotation marks.
 
-In a pipeline, I might quarantine the file or fail the task. I wouldn’t guess at corrections and risk changing its meaning.”
+I’d report the issue and keep the original file for investigation. I wouldn’t guess at a correction because that could change the meaning of the data.”
 
-### 29. How would you ensure a file closes if an exception occurs?
+### 29. How would you ensure a file closes even if an exception occurs?
 
-“I’d use `with open(...)`. The context manager closes the file when the block exits, including when an exception occurs.
+“I’d open it using ‘with’. Python closes the file when that block finishes, even if processing fails halfway through.
 
-For example, if processing fails halfway through reading a CSV, the file is still closed.
+That takes care of the cleanup without needing a separate closing step.
 
-That handles the resource cleanup; I’d separately decide whether to catch the exception or let the caller handle it.”
+I’d still decide how to handle the exception itself, because closing the file doesn’t resolve the underlying problem.”
 
 ### 30. What exceptions would you expect in a data pipeline, and how would you handle them?
 
-“I’d expect missing files, permission problems, invalid formats, conversion errors and failures connecting to APIs or databases.
+“I’d expect missing files, permission problems, invalid values and failed API or database connections.
 
-I’d handle them according to their cause. A temporary network failure might justify a limited retry, while an invalid record might be quarantined under agreed rules. A missing required column would usually stop that processing.
+The response depends on the cause. A temporary connection issue might justify a limited retry. An invalid record might be set aside, while a missing required column could mean stopping the task.
 
-I’d log the stage and cause clearly, and make sure retries don’t create duplicate data.”
+I’d log the problem clearly and make sure retries don’t accidentally duplicate data.”
 
 ## HTTP & APIs
 
 ### 31. What is HTTP?
 
-“HTTP stands for Hypertext Transfer Protocol. It defines how clients and servers exchange requests and responses.
+“HTTP stands for Hypertext Transfer Protocol. It defines how a client and server exchange requests and responses.
 
-For example, when I open a shopping website, my browser requests content and the server sends a response.
+For example, when I open a shopping website, my browser requests content and the server sends it back.
 
-It also supports many APIs, allowing programs to exchange data without someone manually using the website.”
+Programs can use it too, which is how many APIs let applications request data automatically.”
 
-### 32. What does request-response mean?
+### 32. What does a request-response style protocol mean?
 
-“It means one side sends a request, and the other sends a response to it.
+“It means the client asks for something and the server sends a response.
 
-For example, my weather app requests the forecast for Leeds. The server processes that request and returns a status and the forecast data.
+For example, my weather app requests the forecast for Leeds. The server processes that request and sends back a status and, if successful, the forecast data.
 
-The client then checks the result and decides what to display or process.”
+The app checks the response and decides what to display.”
 
 ### 33. What does statelessness mean with HTTP?
 
-“HTTP doesn’t automatically remember earlier requests. Each request is a separate interaction, so previous context isn’t automatically carried over.
+“HTTP doesn’t automatically remember earlier requests. Each request is treated separately, so information from a previous interaction isn’t automatically carried over.
 
-For example, after I log into a website, my browser can send a session cookie with later requests so the site recognises my session.
+For example, after I log into a shopping website, my browser can send a session cookie with later requests so the website recognises my session.
 
-This supports independent request handling, but applications need additional mechanisms when they want to remember a login or shopping basket.”
+This supports independent request handling, but remembering things like a login needs an additional mechanism.”
 
 ### 34. What is found in an HTTP request?
 
-“An HTTP request includes a method, a target, headers and sometimes a body. It also uses a particular HTTP version.
+“A request contains a method, a target, headers and sometimes a body.
 
-The method describes the operation, the target identifies the resource, and headers carry information such as authentication or content type.
+The method says what we want to do, the target identifies what we’re requesting, and headers provide details such as authentication and data format.
 
-For example, submitting a registration form typically sends a POST request with the form details in its body.”
+For example, submitting a registration form typically sends a POST request to the registration endpoint, with the form details in the body.”
 
 ### 35. What is included in an HTTP response?
 
-“A response includes a status code, headers and sometimes a body, using the relevant HTTP version.
+“A response contains a status code, headers and sometimes a body.
 
-The status describes the outcome, headers provide information about the response, and the body contains any returned content.
+The status tells us the outcome, the headers describe the response, and the body contains any returned content.
 
-For example, requesting order details might return `200 OK`, a JSON content-type header and a body containing the order.”
+For example, requesting an order could return status 200 and a JSON body containing its details. Checking the status helps us avoid treating an error response as valid order data.”
 
 ### 36. What are the types of HTTP response status codes?
 
-“They’re grouped into five categories:
+“The first digit tells us the category. Codes in the hundreds are informational, the two hundreds indicate success, and the three hundreds relate to redirection.
 
-- **1xx:** informational.
-- **2xx:** successful.
-- **3xx:** redirection.
-- **4xx:** client-error responses.
-- **5xx:** server-error responses.
+The four hundreds indicate a client-error response, while the five hundreds indicate a server-error response.
 
-For example, `200` indicates success, `404` means the resource wasn’t found, and `500` indicates an internal server error.
+For example, 200 means success, 404 means the resource wasn’t found, and 500 means an internal server error. These help the client decide what to do next.”
 
-These codes help a program decide what to do next, rather than assuming every response contains usable data.”
+### 37. What HTTP methods do we use for CRUD?
 
-### 37. What HTTP methods correspond to CRUD?
+“CRUD stands for Create, Read, Update and Delete.
 
-“CRUD means Create, Read, Update and Delete. Common mappings are:
+We commonly use POST to create, GET to read, PUT or PATCH to update, and DELETE to remove.
 
-- **Create:** POST.
-- **Read:** GET.
-- **Update:** PUT or PATCH.
-- **Delete:** DELETE.
-
-For example, a customer API could use POST to create a profile, GET to retrieve it and PATCH to change an address.
-
-These are common conventions; the API documentation defines its actual supported operations.”
+For example, a customer API could let me create a profile, retrieve it, change the address or delete it. I’d check the documentation to confirm exactly which operations that API supports.”
 
 ### 38. What is the difference between POST, PUT and PATCH?
 
-“POST submits data for processing and often creates a resource. PUT creates or replaces the state at a particular URL. PATCH applies a partial modification.
+“POST sends data for processing and often creates a new resource. PUT creates or replaces the resource at a particular address. PATCH changes selected parts.
 
-For example, POST could create my customer profile, PUT could replace its full editable details, and PATCH could change just my delivery address.
+For example, POST could create my profile, PUT could replace its full details, and PATCH could change just my delivery address.
 
-With PUT, I’d normally send the complete representation the API expects, because leaving fields out could remove or reset them.”
+With PUT, I’d normally send the complete details the API expects, because omitted fields could be removed or reset.”
 
 ### 39. What is DNS?
 
-“DNS stands for Domain Name System. It resolves names such as a website’s domain into information including the IP address needed to reach the service.
+“DNS stands for Domain Name System. It helps resolve a domain name to an IP address so we can reach the service.
 
-For example, I can enter a shop’s website name instead of remembering its numerical address.
+For example, I can enter a shop’s website name rather than remember its numerical address.
 
-When a program calls an API using a hostname, DNS resolution helps it find where to connect.”
+The same applies when Python calls an API using a hostname—DNS helps find where the connection should go.”
 
 ### 40. What is the difference between HTTP and HTTPS?
 
-“HTTPS is HTTP protected using TLS. It encrypts traffic, protects it against undetected changes and authenticates the server through certificates.
+“HTTPS is HTTP protected using TLS. It encrypts the information travelling between the client and server, protects against undetected changes and helps verify the server’s identity.
 
-For example, when I log into a website, HTTPS protects my credentials while they travel.
+For example, it protects my login details while they travel to a website.
 
-It protects the connection, though—it doesn’t automatically mean the website itself is trustworthy or the stored data is secure.”
+It secures the connection, but it doesn’t automatically mean the website itself is trustworthy.”
 
 ### 41. What is a REST API?
 
-“A REST API is an interface designed around REST’s architectural constraints, commonly using HTTP to interact with resources.
+“A REST API lets applications interact with resources following REST’s design principles, usually over HTTP. REST stands for Representational State Transfer.
 
-For example, an orders API could let me retrieve an order using GET or request its removal using DELETE.
+A resource could be a customer or order. For example, a GET request could retrieve an order, while DELETE could request its removal.
 
-It gives different applications a consistent way to interact. Responses often use JSON, although JSON isn’t a requirement of REST.”
+It gives applications a consistent way to interact. JSON is commonly used for the data, but it isn’t required by REST.”
 
 ### 42. What are the REST API criteria?
 
 “The main constraints are client-server separation, statelessness, cacheability, a uniform interface and a layered system. Code on demand is optional.
 
-In practice, that means clear separation of responsibilities, requests containing the context needed to process them, and consistent ways to identify and work with resources. Responses also specify whether they can be cached.
+That means the client and server have separate responsibilities, requests carry the context needed to process them, and resources are accessed consistently. Responses also indicate whether they can be cached.
 
-For example, a client shouldn’t need to know which database sits behind an orders API.”
+For example, a client can use an orders API without knowing which database or intermediary services are behind it.”
 
 ### 43. What is a REST endpoint?
 
-“A REST endpoint is an address through which we interact with an API resource.
+“A REST endpoint is an address where we interact with an API resource.
 
-For example, `/orders/123` could identify order 123. A GET request retrieves its representation, while another supported method performs a different operation.
+For example, an endpoint could have a path of ‘orders’, followed by a slash and an order ID such as 123. Sending GET to that address retrieves that order’s details.
 
-The address identifies what we’re working with, and the HTTP method tells the server what we want to do.”
+The address identifies what we mean, and the method tells the server what we want to do.”
 
 ### 44. What is an API key?
 
-“An API key is a credential that a service can use to identify the application or project making requests. It may also control access, usage limits or billing.
+“An API key is a credential a service uses to identify the application or project making requests. It can also help control access, track usage or apply billing.
 
-For example, a weather service might require a key alongside requests.
+For example, a weather API might require a key alongside each request.
 
-I’d follow its instructions for sending the key and keep it out of shared code, using environment variables or a secret store instead.”
+I’d keep it out of shared code and store it securely, because exposing it could let someone use the service under our account.”
 
 ---
 
