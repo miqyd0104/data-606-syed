@@ -2,7 +2,7 @@
 
 14 October 2026
 
-[← Week 4](../README.md) · [Previous notes: Testing, files and CSV pipelines](day-02-testing-files-and-csv-pipelines.md)
+[← Week 4](../README.md) · [Previous notes: Testing, files and CSV pipelines](day-02-testing-files-and-csv-pipelines.md) · [Next notes: Python with SQL Server, query results and API revision](day-04-python-sql-server-and-api-revision.md)
 
 Today reviewed the IMDb pipelines, including my own extract–transform–load implementation, and connected the feedback to testing and code organisation. We then completed the explanation of `finally`, introduced JSON serialisation and deserialisation, and read JSON from a URL. The session ended by setting a REST API fundamentals course for independent study.
 
