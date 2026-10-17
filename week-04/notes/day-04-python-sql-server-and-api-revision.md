@@ -2,7 +2,7 @@
 
 15 October 2026
 
-[← Week 4](../README.md) · [Previous notes: ETL review, JSON and API preparation](day-03-etl-review-json-and-api-preparation.md)
+[← Week 4](../README.md) · [Previous notes: ETL review, JSON and API preparation](day-03-etl-review-json-and-api-preparation.md) · [Next notes: Jupyter notebooks and NumPy](day-05-jupyter-notebooks-and-numpy.md)
 
 Today began with interview practice on Python, APIs, HTTP methods and JSON. We then connected Python to the Northwind SQL Server database using `pyodbc`, executed queries, compared the fetch methods and passed Python values into SQL safely. The afternoon finished with connection cleanup and priorities for independent work.
 
