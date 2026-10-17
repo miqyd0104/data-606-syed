@@ -6,7 +6,7 @@
 
 ## Starting the training
 
-The first yayayayayayayayday covered how the training will work, what is expected of us as junior consultants and the skills we need before working with a client. There was also a group discussion about the T-shaped professional and a presentation task to prepare for the next day.
+The first day covered how the training will work, what is expected of us as junior consultants and the skills we need before working with a client. There was also a group discussion about the T-shaped professional and a presentation task to prepare for the next day.
 
 The training is about being able to do the work and explain it clearly. Technical knowledge matters, but so do reliability, communication and how we work with other people.
 
