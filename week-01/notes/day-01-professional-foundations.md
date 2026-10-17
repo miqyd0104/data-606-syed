@@ -16,7 +16,7 @@ There are four main areas:
 
 - **Delivery:** finishing work on time and to the standard required.
 - **Engagement:** getting involved, asking questions, answering questions and contributing to discussions.
-- **Professionalism:** being punctual, respectful and prepared, and letting people know about problems early.
+- **Professionalism:** being punctual, respectful and prepared, and letting people know about problems early. a weaknesss!!!
 - **Communication:** explaining ideas clearly, both verbally and in writing, with the right level of detail for the audience.
 
 Tests are only one part of this. The work we do each day and how we approach it also matter. If we receive feedback, we need to apply it to the next piece of work.
