@@ -11,3 +11,10 @@
 - [Day 5 — Jupyter notebooks and NumPy](notes/day-05-jupyter-notebooks-and-numpy.md)
 
 [Exercises](exercises/) · [Projects](projects/)
+
+## Worked exercises
+
+- [Week 4 exercise guide and solutions](exercises/catch-up/README.md)
+- [Verification results and coverage limits](exercises/catch-up/verification.md)
+- [NumPy consolidation notebook](exercises/catch-up/day_05_numpy.ipynb)
+- [Northwind Python exercise](exercises/catch-up/day_04_northwind.py)
